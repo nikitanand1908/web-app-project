@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'dockeradmin/tomcat:8-jre8'
+        DOCKER_IMAGE = 'dockeradmin/tomcat:latest'
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
         stage('Build and Publish Docker Image') {
             steps {
                 script {
-                    docker.build DOCKER_IMAGE
+                    docker.build tomcat:latest
                 }
             }
         }
@@ -34,8 +34,8 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com', '123545') {
-                        docker.image(DOCKER_IMAGE).push()
+                    docker.withRegistry('docker.io/library/tomcat:latest', '123545') {
+                        docker.image(tomcat).push()
                     }
                 }
             }
