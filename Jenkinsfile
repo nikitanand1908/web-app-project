@@ -34,7 +34,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('docker.io/library/tomcat:latest', '123545') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/nikitanand1908/demo-webapp/general', 'Nikita@2000') {
                         docker.image(tomcat).push()
                     }
                 }
