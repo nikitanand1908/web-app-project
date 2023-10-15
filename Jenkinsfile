@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'nikitanand1908/tomcat:8-jre8'
+        DOCKER_IMAGE = 'dockeradmin/tomcat:8-jre8'
     }
 
     stages {
@@ -34,7 +34,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com/r/nikitanand1908/demo-webapp', 'Nikita@2000') {
+                    docker.withRegistry('https://hub.docker.com', '123545') {
                         docker.image(DOCKER_IMAGE).push()
                     }
                 }
