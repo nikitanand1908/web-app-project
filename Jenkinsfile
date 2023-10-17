@@ -33,7 +33,7 @@ stages {
                 script {
                     sshagent(['$SSH_CREDENTIALS']) {
                         sh 'ssh ec2-user@52.192.134.122 "/home/ec2-user/tomcat/bin/shutdown.sh"'
-                        sh 'scp target/your-web-app.war ec2-user@52.192.134.122:/home/ec2-user/tomcat/webapps'
+                        sh 'scp target/web-app-project.war ec2-user@52.192.134.122:/home/ec2-user/tomcat/webapps'
                         sh 'ssh ec2-user@52.192.134.122 "/home/ec2-user/tomcat/bin/startup.sh"'
                     }
                 }
