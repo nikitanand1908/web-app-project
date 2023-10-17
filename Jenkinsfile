@@ -27,7 +27,6 @@ environment {
                 bat "mvn install" 
             }
          }
-stages {
         stage('Deploy to Tomcat') {
             steps {
                 script {
@@ -50,4 +49,4 @@ stages {
     }
 
     }
-}
+
