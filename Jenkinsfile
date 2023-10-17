@@ -1,61 +1,53 @@
 pipeline {
     agent any
-    
-    tools {
-
-        maven 'Maven'
+    tools { 
+        maven 'maven' 
+   }
+environment {
+        SSH_CREDENTIALS = credentials('be8cb450-d739-4d6b-96b3-84c0d4672e91')
     }
-
-    environment {
-        DOCKER_IMAGE = 'dockeradmin/tomcat:latest'
-    }
-
     stages {
-        stage('Checkout') {
+          stage ('compile') {
             steps {
-                checkout scm
+                bat "mvn compile" 
             }
-        }
-
-        stage('Build and Package with Maven') {
+         }
+          stage ('test') {
             steps {
-                sh 'mvn clean package'
+                bat "mvn test" 
             }
-        }
-
-        stage('Build and Publish Docker Image') {
+         }
+          stage ('package') {
+            steps {
+                bat "mvn package" 
+            }
+         }
+          stage ('Build') {
+            steps {
+                bat "mvn install" 
+            }
+         }
+stages {
+        stage('Deploy to Tomcat') {
             steps {
                 script {
-                    docker.build tomcat:latest
-                }
-            }
-        }
-
-        stage('Push Docker Image to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/nikitanand1908/demo-webapp/general', 'Nikita@2000') {
-                        docker.image(tomcat).push()
+                    sshagent(['$SSH_CREDENTIALS']) {
+                        sh 'ssh ec2-user@52.192.134.122 "/home/ec2-user/tomcat/bin/shutdown.sh"'
+                        sh 'scp target/your-web-app.war ec2-user@52.192.134.122:/home/ec2-user/tomcat/webapps'
+                        sh 'ssh ec2-user@52.192.134.122 "/home/ec2-user/tomcat/bin/startup.sh"'
                     }
                 }
             }
         }
-
-        stage('Deploy to Docker') {
-            steps {
-                script {
-                    docker.image(DOCKER_IMAGE).withRun('-p 8080:8080 -d')
-                }
-            }
+    }
+    post {
+        success {
+            echo 'Deployment successful'
+        }
+        failure {
+            echo 'Deployment failed'
         }
     }
 
-    post {
-        success {
-            echo 'Pipeline succeeded. Application deployed to Docker container.'
-        }
-        failure {
-            echo 'Pipeline failed. Deployment to Docker container was not successful.'
-        }
     }
 }
