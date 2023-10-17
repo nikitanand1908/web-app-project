@@ -9,22 +9,22 @@ environment {
     stages {
           stage ('compile') {
             steps {
-                bat "mvn compile" 
+                sh "mvn compile" 
             }
          }
           stage ('test') {
             steps {
-                bat "mvn test" 
+                sh "mvn test" 
             }
          }
           stage ('package') {
             steps {
-                bat "mvn package" 
+                sh "mvn package" 
             }
          }
           stage ('Build') {
             steps {
-                bat "mvn install" 
+                sh "mvn install" 
             }
          }
         stage('Deploy to Tomcat') {
