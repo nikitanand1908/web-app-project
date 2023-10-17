@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools { 
-        maven 'maven' 
+        maven 'Maven' 
    }
 environment {
         SSH_CREDENTIALS = credentials('be8cb450-d739-4d6b-96b3-84c0d4672e91')
