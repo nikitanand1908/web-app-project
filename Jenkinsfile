@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven' 
    }
 environment {
-        SSH_CREDENTIALS = credentials('a9ba75cbd9f843548eb9cefdbd119253')
+        SSH_CREDENTIALS = credentials('a9ba75cb-d9f8-4354-8eb9-cefdbd119253')
     }
     stages {
           stage ('compile') {
@@ -33,7 +33,7 @@ environment {
                     sshagent(['$SSH_CREDENTIALS']) {
                         sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/shutdown.sh"'
                         sh 'scp target/web-app-project.war ec2-user@18.183.176.95:/home/ec2-user/tomcat/webapps'
-                        sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/startup.sh"'
+                        sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/startup.sh"
                     }
                 }
             }
