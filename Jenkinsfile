@@ -32,8 +32,8 @@ environment {
                 script {
                     sshagent(['$SSH_CREDENTIALS']) {
                         sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/shutdown.sh"'
-                        sh 'scp target/web-app-project.war ec2-user@18.183.176.95:/home/ec2-user/tomcat/webapps'
-                        sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/startup.sh"
+                        sh 'scp target/web-app-project.war ec2-user@18.183.176.95: "/home/ec2-user/tomcat/webapps"'
+                        sh 'ssh ec2-user@18.183.176.95 "/home/ec2-user/tomcat/bin/startup.sh"'
                     }
                 }
             }
