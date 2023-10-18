@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven' 
    }
 environment {
-        SSH_CREDENTIALS = credentials('a9ba75cb-d9f8-4354-8eb9-cefdbd119253')
+        SSH_CREDENTIALS = credentials('a9ba75cbd9f843548eb9cefdbd119253')
     }
     stages {
           stage ('compile') {
